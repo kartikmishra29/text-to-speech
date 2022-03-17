@@ -1,0 +1,25 @@
+{
+  "name": "text-to-speech",
+  "version": "1.0.0",
+  "description": "This project can be used to convert text to speech (audio file)",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "text",
+    "speech",
+    "texttospeech"
+  ],
+  "author": "Kartik Mishra",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "gtts": "^0.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
