@@ -1,11 +1,14 @@
 import express from 'express'
 import gTTS from 'gtts'
+import fs from 'fs'
 
 var app = express()
 
 var PORT = 3000
 
-app.use('/file/tts/', express.static('output/tts/'))
+var outputDir = './output/tts/'
+
+app.use('/file/tts/', express.static(outputDir))
 
 app.get('/', function(req, res) {
     res.status(200).send('Hello World!');
@@ -15,7 +18,7 @@ app.get('/tts/:text/:lang', async function(req, res) {
     try{
         var name = randomName(10) + '.mp3'
         var gtts = new gTTS(req.params.text, req.params.lang)
-        gtts.save('./output/tts/' + name, function (err, result) {
+        gtts.save(outputDir + name, function (err, result) {
             if(err) { throw new Error(err) }
             console.log('Text to speech conversion is successful');
             res.status(200).redirect('http://localhost:' + PORT + '/file/tts/' + name)
@@ -28,6 +31,9 @@ app.get('/tts/:text/:lang', async function(req, res) {
 })
 
 app.listen(PORT, function(){
+    if (!fs.existsSync(outputDir)){
+        fs.mkdirSync(outputDir, { recursive: true });
+    }
     console.log('Server is running on port: ' + PORT)
 })
 
